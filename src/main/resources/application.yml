@@ -1,0 +1,36 @@
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/haroo_stock
+    username: postgres
+    password: 1234
+    pool:
+      enabled: true
+      max-size: 30
+      initial-size: 10
+      max-idle-time: 30m
+      max-life-time: 30m
+      validation-query: SELECT 1
+      validation-depth: remote
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  quartz:
+    job-store-type: memory
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: QuartzScheduler
+          threadPool:
+            threadCount: 5
+          jobStore:
+            misfireThreshold: 60000
+logging:
+  level:
+    org:
+      springframework: DEBUG
+    io:
+      r2dbc:
+        postgresql:
+          QUERY: DEBUG
+          PARAM: TRACE
